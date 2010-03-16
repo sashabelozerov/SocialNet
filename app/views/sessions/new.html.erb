@@ -1,0 +1,17 @@
+<h1>Login Page</h1>
+ <% if flash[:error] %>
+      <%= flash[:error] %>
+ <% end %>
+
+<table>
+  <% form_tag sessions_path do %>
+  <tr>
+    <td>Login: </td>
+    <td><%= text_field_tag :login %></td>
+  </tr>
+  <tr>
+    <td>Password: </td>
+    <td><%= text_field_tag :password %></td>
+  </tr>
+  <% end %>
+</p>

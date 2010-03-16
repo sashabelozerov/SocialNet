@@ -1,0 +1,31 @@
+<h1>Listing users</h1>
+
+<% if flash[:error] %>
+      <%= flash[:error] %>
+<% end %>
+<% if flash[:notice] %>
+      <%= flash[:notice] %>
+ <% end %>
+
+<table>
+  <tr>
+    <th>name</th>
+    <th>login</th>
+    <th>password</th>
+  </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%=h user.name %></td>
+    <td><%=h user.login %></td>
+    <td><%=h user.password %></td>
+    <td><%if user.id == session[:id] %>
+	  <%=h "logged in" %>
+	  <% end %>
+    </td>
+    <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'New user', new_user_path %>
