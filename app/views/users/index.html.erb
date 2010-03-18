@@ -18,14 +18,19 @@
   <tr>
     <td><%=h user.name %></td>
     <td><%=h user.login %></td>
-    <td><%=h user.password %></td>
-    <td><%if user.id == session[:id] %>
-	  <%=h "logged in" %>
+    <td><%=h user.crypted_password %></td>
+    <td><%if user == @current_user %>
+	  logged in
 	  <% end %>
     </td>
     <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
+
+<p><% if @current_user %>
+Current user: <%= @current_user.name %>
+<% end %>
+</p>
 
 <%= link_to 'New user', new_user_path %>
