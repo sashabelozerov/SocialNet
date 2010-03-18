@@ -3,7 +3,7 @@
 
 <% if !current_user %>
   <%= link_to "Register", new_user_url %> |
-  <%= link_to "Log In", new_user_session_user %>
+  <%= link_to "Log In", new_user_session_url %>
 <% else %>
   <%= link_to "My Account", user_url(@current_user) %> |
   <%= link_to "Logout", user_session_url, :method => :delete, :confirm => "Are you sure you want to logout?" %>
