@@ -1,0 +1,14 @@
+<% "Message" %>
+
+<p>
+  <strong>Title:</strong>
+  <%=h @message.title %>
+</p>
+<p>
+  <strong>Content:</strong>
+  <%=h @message.content %>
+</p>
+
+<p>
+  <%= link_to "Destroy", @message, :confirm => 'Are you sure?', :method => :delete %> |
+</p>

@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :messages
+
   # The priority is based upon order of creation: first created -> highest priority.
 
 map.resources :users
@@ -6,6 +8,13 @@ map.resource :user_session
 
 map.login 'login', :controller => 'user_sessions', :action => 'new'
 map.logout 'logout', :controller => 'user_sessions', :action => 'destroy'
+
+
+map.user_messages 'users/:user_id/:mailbox/', :controller => 'messages', :action => 'create', :conditions => { :method => :post }
+map.user_messages 'users/:user_id/:mailbox', :controller => 'messages', :action => 'index', :conditions => { :method => :get }
+
+map.new_user_message 'users/:user_id/:mailbox/new', :controller => 'messages', :action => 'new', :conditions => { :method => :get }
+
 
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'

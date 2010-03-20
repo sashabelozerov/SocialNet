@@ -1,4 +1,11 @@
+<h1>
+  <%=h @user.name %>'s Page
+</h1>
+
+<h2>Messages:</h2>
 <p>
-  <b>Login:</b>
-  <%=h @user.login %>
-</p>
+<%= link_to 'Inbox', user_messages_url(@user, "inbox") %><br />
+<%= link_to 'Sent', user_messages_url(@user, "sent") %>
+<h2>Friends:</h2>
+<h2>Events:</h2>
+<h2>Photos:</h2>
