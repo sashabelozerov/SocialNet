@@ -6,4 +6,6 @@ class User < ActiveRecord::Base
 	has_many :messages_as_author, :class_name => "Message", :foreign_key => "author_id"
 	has_many :messages_as_recipient, :class_name => "Message", :as => :messageable
 
+	has_many :friendships
+	has_many :friends, :through => :friendships
 end

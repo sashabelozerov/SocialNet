@@ -2,14 +2,14 @@ class UsersController < ApplicationController
 
   before_filter :require_user, :only => :show
   before_filter :require_no_user, :only => [:new, :create]
-  before_filter :current_user, :only => :index
+  before_filter :current_user, :only => [:index, :destroy]
 
   def index
 	@users = User.all
   end
 
   def show
-	@user = @current_user
+	@user = User.find(params[:id])
   end
 
   def new
@@ -27,8 +27,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
-    @user.destroy
+    @current_user.destroy
     redirect_to users_url
   end
 

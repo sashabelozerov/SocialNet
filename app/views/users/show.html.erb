@@ -1,11 +1,27 @@
+
+<p>
+<%= link_to "Users List", users_path %>
+</p>
 <h1>
   <%=h @user.name %>'s Page
 </h1>
 
+<% if @user == @current_user %>
 <h2>Messages:</h2>
 <p>
 <%= link_to 'Inbox', user_messages_url(@user, "inbox") %><br />
 <%= link_to 'Sent', user_messages_url(@user, "sent") %>
+<%end%>
 <h2>Friends:</h2>
+<table>
+<% for friendship in @user.friendships %>
+<tr>
+<td><%= link_to "#{friendship.friend.name}", user_url(friendship.friend) %></td>
+<td><%= link_to "Remove", friendship, :method => :delete %>
+</tr>
+<% end %>
+</table>
 <h2>Events:</h2>
 <h2>Photos:</h2>
+
+

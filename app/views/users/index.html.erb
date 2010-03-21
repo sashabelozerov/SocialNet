@@ -14,7 +14,14 @@
 	  logged in
 	  <% end %>
     </td>
+	<td>
+	<% if (user != @current_user) and @current_user %>
+	<%= link_to "Add Friend", friendships_path(:friend_id => user), :method => :post %>
+	<% end %>
+	</td>
+	<% if user == @current_user %>
     <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
+	<% end %>
   </tr>
 <% end %>
 </table>
