@@ -22,8 +22,8 @@ class MessagesController < ApplicationController
   def create
 	
      @message = @current_user.messages_as_author.build(params[:message])
-	 @message.messageable = User.find_by_login(params[:message][:messageable_id].strip)
-     @message.author = @current_user
+	 @message.user_target = User.find_by_login(params[:message][:user_id_target].strip)
+     @message.user = @current_user
      if @message.save
      	 flash[:notice] = "Successfully created message."
 		redirect_to user_url(@current_user)

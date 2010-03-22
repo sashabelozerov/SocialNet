@@ -1,6 +1,7 @@
 class Message < ActiveRecord::Base
-  attr_accessible :title, :content
-
-	belongs_to :author, :class_name => "User", :foreign_key => "author_id"
-	belongs_to :messageable, :polymorphic => true
+	attr_accessible :title, :content
+	validates_presence_of :user_id
+	
+	belongs_to :user
+	belongs_to :user_target, :class_name => "User", :foreign_key => "user_id_target"
 end

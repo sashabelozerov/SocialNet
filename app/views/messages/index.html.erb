@@ -1,4 +1,4 @@
-<% "Messages" %>
+<h1>Messages</h1>
 
 <table>
   <tr>
@@ -15,9 +15,9 @@
       <td><%=h message.title %></td>
       <td><%=h message.content %></td>
 	  <%if @mailbox == "sent" %>
-		<td><%=h message.messageable.name %></td>
+		<td><%=h message.user_target.name %></td>
 	  <% else %>
-		<td><%=h message.author.name %></td>
+		<td><%=h message.user.name %></td>
 	  <% end %>
       <td><%= link_to "Show", message %></td>
       <td><%= link_to "Destroy", message, :confirm => 'Are you sure?', :method => :delete %></td>

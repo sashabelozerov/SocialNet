@@ -9,8 +9,8 @@
 <% if @user == @current_user %>
 <h2>Messages:</h2>
 <p>
-<%= link_to 'Inbox', user_messages_url(@user, "inbox") %><br />
-<%= link_to 'Sent', user_messages_url(@user, "sent") %>
+<%= link_to 'Inbox', user_messages_url(@user, :mailbox => "inbox") %><br />
+<%= link_to 'Sent', user_messages_url(@user, :mailbox => "sent") %>
 <%end%>
 <h2>Friends:</h2>
 <table>
