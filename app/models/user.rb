@@ -8,4 +8,10 @@ class User < ActiveRecord::Base
 
 	has_many :friendships, :dependent => :destroy
 	has_many :friends, :through => :friendships
+	
+	has_many :events_as_author, :class_name => "Event", :foreign_key => "user_id"
+	#has_many :event_users
+	#has_many :events_as_attendee, :source => :event, :through => :event_users
+	
+	has_many :comments
 end

@@ -1,11 +1,16 @@
 ActionController::Routing::Routes.draw do |map|
+  
+  map.resources :comments
+
+  map.resources :events
+
   map.resources :friendships
 
   map.resources :messages
 
   # The priority is based upon order of creation: first created -> highest priority.
 
-map.resources :users, :has_many => :messages
+map.resources :users, :has_many => [:messages, :events, :comments]
 map.resource :user_session
 
 map.login 'login', :controller => 'user_sessions', :action => 'new'
