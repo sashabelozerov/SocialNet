@@ -1,44 +1,50 @@
 class EventsController < ApplicationController
+
+	before_filter :require_user, :only => [:new, :create, :edit, :update]
+	before_filter :current_user
+	
   def index
-    @events = Event.all
+	@user = User.find(params[:user_id])
+    @events = @user.events_as_author.all
   end
   
   def show
-    @event = Event.find(params[:id])
+	@user = User.find(params[:user_id])
+    @event = @user.events_as_author.find(params[:id])
   end
   
   def new
-    @event = Event.new
+    @event = @current_user.events_as_author.new
   end
   
   def create
-    @event = Event.new(params[:event])
+    @event = @current_user.events_as_author.new(params[:event])
     if @event.save
       flash[:notice] = "Successfully created event."
-      redirect_to @event
+      redirect_to user_event_url(@current_user, @event)
     else
       render :action => 'new'
     end
   end
   
   def edit
-    @event = Event.find(params[:id])
+    @event = @current_user.events_as_author.find(params[:id])
   end
   
   def update
-    @event = Event.find(params[:id])
+    @event = @current_user.events_as_author.find(params[:id])
     if @event.update_attributes(params[:event])
       flash[:notice] = "Successfully updated event."
-      redirect_to @event
+      redirect_to user_event_url(@current_user, @event)
     else
       render :action => 'edit'
     end
   end
   
   def destroy
-    @event = Event.find(params[:id])
+    @event = @current_user.events_as_author.find(params[:id])
     @event.destroy
     flash[:notice] = "Successfully destroyed event."
-    redirect_to events_url
+    redirect_to @current_user
   end
 end

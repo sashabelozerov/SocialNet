@@ -2,7 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :comments
 
-  map.resources :events
+  map.resources :events, :has_many => :comments
 
   map.resources :friendships
 

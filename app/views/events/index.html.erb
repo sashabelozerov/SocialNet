@@ -1,4 +1,4 @@
-<% title "Events" %>
+<h1>"Events"</h1>
 
 <table>
   <tr>
@@ -14,12 +14,12 @@
       <td><%=h event.description %></td>
       <td><%=h event.start_time %></td>
       <td><%=h event.end_time %></td>
-      <td><%=h event.user_id %></td>
-      <td><%= link_to "Show", event %></td>
-      <td><%= link_to "Edit", edit_event_path(event) %></td>
+      <td><%=h event.user.name %></td>
+      <td><%= link_to "Show", user_event_url(@user,event) %></td>
+      <td><%= link_to "Edit", edit_user_event_url(@user,event) %></td>
       <td><%= link_to "Destroy", event, :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
 </table>
 
-<p><%= link_to "New Event", new_event_path %></p>
+<p><%= link_to "New Event", new_user_event_url(@user) %></p>

@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   before_filter :require_user, :only => :show
   before_filter :require_no_user, :only => [:new, :create]
-  before_filter :current_user, :only => [:index, :destroy]
+  before_filter :current_user, :only => [:index, :destroy, :edit, :update]
 
   def index
 	@users = User.all
@@ -26,6 +26,18 @@ class UsersController < ApplicationController
 	end
   end
 
+  def edit
+  end
+  
+  def update
+	if @current_user.update_attributes(params[:user])
+		flash[:notice] = 'Successfully updated profile.'
+        redirect_to @current_user
+    else
+		render :action => "edit"
+	end
+  end
+  
   def destroy
     @current_user.destroy
     redirect_to users_url

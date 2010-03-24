@@ -1,4 +1,4 @@
-<% title "Event" %>
+<h1><%=h "#{@event.title}:"%></h1>
 
 <p>
   <strong>Title:</strong>
@@ -17,12 +17,19 @@
   <%=h @event.end_time %>
 </p>
 <p>
-  <strong>User:</strong>
-  <%=h @event.user_id %>
+  <strong>Creator:</strong>
+  <%=h @event.author.name %>
 </p>
 
 <p>
-  <%= link_to "Edit", edit_event_path(@event) %> |
-  <%= link_to "Destroy", @event, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", events_path %>
+  <%= link_to "Comments", event_comments_url(@event) %>
+  <% if @event.author == @current_user %>
+	| <%= link_to "Edit", edit_user_event_path(@user,@event) %> |
+	<%= link_to "Cancel event", @event, :confirm => 'Are you sure?', :method => :delete %>
+  <% end %>
 </p>
+
+<h2>Comments:</h2>
+<% for comment in @event.comments %>
+
+<% end %>
