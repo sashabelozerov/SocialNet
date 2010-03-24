@@ -16,4 +16,12 @@ class User < ActiveRecord::Base
 	#has_many :events_as_attendee, :source => :event, :through => :event_users
 	
 	has_many :comments
+
+  def messages(mailbox)
+    if mailbox == "sent"
+      self.messages_as_author
+   	else
+      self.messages_as_recipient
+   	end
+  end
 end

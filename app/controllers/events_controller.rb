@@ -2,14 +2,15 @@ class EventsController < ApplicationController
 
 	before_filter :require_user, :only => [:new, :create, :edit, :update]
 	before_filter :current_user
+
+  before_filter :get_user, :only => [:index, :show]
+  before_filter :get_event, :only => [:edit, :update, :destroy]
 	
   def index
-	@user = User.find(params[:user_id])
-    @events = @user.events_as_author.all
+    @events = @user.events_as_author
   end
   
   def show
-	@user = User.find(params[:user_id])
     @event = @user.events_as_author.find(params[:id])
   end
   
@@ -28,11 +29,9 @@ class EventsController < ApplicationController
   end
   
   def edit
-    @event = @current_user.events_as_author.find(params[:id])
   end
   
   def update
-    @event = @current_user.events_as_author.find(params[:id])
     if @event.update_attributes(params[:event])
       flash[:notice] = "Successfully updated event."
       redirect_to user_event_url(@current_user, @event)
@@ -42,9 +41,17 @@ class EventsController < ApplicationController
   end
   
   def destroy
-    @event = @current_user.events_as_author.find(params[:id])
     @event.destroy
     flash[:notice] = "Successfully destroyed event."
     redirect_to @current_user
+  end
+
+  private
+  def get_user
+    @user = User.find(params[:user_id])
+  end
+
+  def get_event
+
   end
 end
