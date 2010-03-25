@@ -18,6 +18,7 @@ map.logout 'logout', :controller => 'user_sessions', :action => 'destroy'
 
 map.profile_edit 'profile/edit', :controller => 'users', :action => 'edit'
 map.profile_destroy 'profile/destroy', :controller => 'users', :action => 'destroy'
+map.message_delete 'messages/:id/delete', :controller => 'messages', :action => 'delete_from_mailbox'
 
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'

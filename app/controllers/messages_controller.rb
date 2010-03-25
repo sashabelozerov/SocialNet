@@ -2,7 +2,16 @@ class MessagesController < ApplicationController
 
   before_filter :require_user
 
-  before_filter :get_message, :only => [:show, :destroy]
+  before_filter :get_message, :only => [:show, :destroy, :delete_from_mailbox]
+
+  def delete_from_mailbox
+    if @current_user.target?(@message)
+      @message.update_attribute(:target_deleted, 1)
+    else
+      @message.update_attribute(:user_deleted, 1)
+    end
+    redirect_to user_url(@current_user)
+  end
 
   def index
     @mailbox = params[:mailbox]

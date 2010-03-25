@@ -11,6 +11,26 @@
 	 <% end %>
   </tr>
   <% for message in @messages %>
+  <% if message.target_deleted == 0 && @current_user == message.target%>
+  <tr>
+      <td><%=h message.title %></td>
+      <td><%=h message.content %></td>
+      <%if @mailbox == "sent" %>
+        <td><%=h message.target.name %></td>
+        <td><% if message.user_read == 0 %>
+          <%= "*" %>
+        <% end %></td>
+      <% else %>
+	<td><%=h message.user.name %></td>
+        <td><% if message.target_read == 0 %>
+         <%= "*" %>
+        <% end %></td>
+      <% end %>
+      <td><%= link_to "Show", user_message_url(@current_user, message) %></td>
+      <td><%= link_to "Delete", message_delete_url(message), :confirm => 'Are you sure?' %></td>
+    </tr>
+  <% end %>
+  <% if message.user_deleted == 0 && @current_user == message.user%>
     <tr>
       <td><%=h message.title %></td>
       <td><%=h message.content %></td>
@@ -26,8 +46,9 @@
         <% end %></td>
       <% end %>
       <td><%= link_to "Show", user_message_url(@current_user, message) %></td>
-      <td><%= link_to "Delete", message, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><%= link_to "Delete", message_delete_url(message), :confirm => 'Are you sure?' %></td>
     </tr>
+  <% end %>
   <% end %>
 </table>
 
