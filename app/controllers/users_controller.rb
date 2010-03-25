@@ -5,37 +5,37 @@ class UsersController < ApplicationController
   before_filter :current_user, :only => [:index, :destroy, :edit, :update]
 
   def index
-	@users = User.all
+    @users = User.all
   end
 
   def show
-	@user = User.find(params[:id])
+    @user = User.find(params[:id])
   end
 
   def new
-	@user = User.new
+    @user = User.new
   end
 
   def create
-	@user = User.new(params[:user])
-	if @user.save
-		flash[:notice] = "Account registered successful"
-		redirect_to users_url
-	else
-		render :action => "new"
-	end
+  	@user = User.new(params[:user])
+    if @user.save
+     	flash[:notice] = "Account registered successful"
+     	redirect_to users_url
+  	else
+    	render :action => "new"
+  	end
   end
 
   def edit
   end
   
   def update
-	if @current_user.update_attributes(params[:user])
-		flash[:notice] = 'Successfully updated profile.'
-        redirect_to @current_user
+    if @current_user.update_attributes(params[:user])
+      flash[:notice] = 'Successfully updated profile.'
+      redirect_to @current_user
     else
-		render :action => "edit"
-	end
+      render :action => "edit"
+    end
   end
   
   def destroy

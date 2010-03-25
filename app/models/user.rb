@@ -24,4 +24,5 @@ class User < ActiveRecord::Base
       self.messages_as_recipient
    	end
   end
+  
 end

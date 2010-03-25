@@ -47,11 +47,13 @@ class EventsController < ApplicationController
   end
 
   private
+
   def get_user
     @user = User.find(params[:user_id])
   end
 
   def get_event
-
+    @event = @current_user.events_as_author.find(params[:id])
   end
+
 end

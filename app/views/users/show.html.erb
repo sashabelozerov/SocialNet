@@ -7,7 +7,7 @@
 </h1>
 
 <% if @user == @current_user %>
-<%= link_to 'Edit profile', edit_user_url(@user) %>
+<%= link_to 'Edit profile', profile_edit_url %>
 
 <h2>Messages:</h2>
 <%= link_to 'Inbox', user_messages_url(@user, :mailbox => "inbox") %><br />
@@ -19,7 +19,7 @@
 <% for friendship in @user.friendships %>
 <tr>
 <td><%= link_to "#{friendship.friend.name}", user_url(friendship.friend) %></td>
-<td><%= link_to "Remove", friendship, :method => :delete %>
+<td><%= link_to "Remove", friendship, :method => :delete %></td>
 </tr>
 <% end %>
 </table>
@@ -33,7 +33,7 @@
 <tr>
 <td><%= link_to "#{event.title}", user_event_url(@user, event) %></td>
 <% if @user == @current_user %>
-	<td><%= link_to 'Cancel event', event, :method => :delete %>
+	<td><%= link_to 'Cancel event', event, :method => :delete %></td>
 <% end %>
 </tr>
 <% end %>

@@ -1,11 +1,11 @@
 class CommentsController < ApplicationController
   def index
-	@commentable = ...
+  	@commentable = ...
     @comments = @commentable.comments.all
   end
   
   def show
-	@commentable = ...
+  	@commentable = ...
     @comment = @commentable.comments.find(params[:id])
   end
   
@@ -43,4 +43,5 @@ class CommentsController < ApplicationController
     flash[:notice] = "Successfully destroyed comment."
     redirect_to comments_url
   end
+
 end
