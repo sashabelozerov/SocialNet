@@ -11,7 +11,7 @@
     <%= f.text_area :content %>
   </p>
   <p>
-  <%= f.select :user_id_target, User.all.collect{|i| [i.name, i.id]} %>
+  <%= f.select :target_id, User.all.collect{|i| [i.name, i.id]} %>
   </p>
-  <p><%= f.submit "Submit" %></p>
+  <p><%= f.submit "Send" %></p>
 <% end %>

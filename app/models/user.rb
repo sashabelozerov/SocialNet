@@ -5,17 +5,17 @@ class User < ActiveRecord::Base
 	
 	attr_accessible :name, :login, :password 
 
-	has_many :messages_as_author, :class_name => "Message", :foreign_key => "user_id"
-	has_many :messages_as_recipient, :class_name => "Message", :foreign_key => "user_id_target"
+	has_many :messages_as_author, :class_name => "Message", :foreign_key => "user_id", :dependent => :destroy
+	has_many :messages_as_recipient, :class_name => "Message", :foreign_key => "target_id", :dependent => :destroy
 
 	has_many :friendships, :dependent => :destroy
 	has_many :friends, :through => :friendships
 	
-	has_many :events_as_author, :class_name => "Event", :foreign_key => "user_id"
+	has_many :events_as_author, :class_name => "Event", :foreign_key => "user_id", :dependent => :destroy
 	#has_many :event_users
 	#has_many :events_as_attendee, :source => :event, :through => :event_users
 	
-	has_many :comments
+	has_many :comments, :dependent => :destroy
 
   def messages(mailbox)
     if mailbox == "sent"
@@ -23,6 +23,14 @@ class User < ActiveRecord::Base
    	else
       self.messages_as_recipient
    	end
+  end
+
+  def target?(message)
+    message.target == self
+  end
+
+  def author?(message)
+    message.user == self
   end
   
 end

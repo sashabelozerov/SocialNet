@@ -3,12 +3,18 @@ class MessagesController < ApplicationController
   before_filter :require_user
 
   before_filter :get_message, :only => [:show, :destroy]
-  def index 
+
+  def index
     @mailbox = params[:mailbox]
     @messages = @current_user.messages(@mailbox)
   end
   
   def show
+    if @current_user.target?(@message)
+      @message.update_attribute(:target_read, 1)
+    else
+      @message.update_attribute(:user_read, 1)
+    end
   end
   
   def new
@@ -18,8 +24,12 @@ class MessagesController < ApplicationController
   def create
 	
     @message = @current_user.messages_as_author.build(params[:message])
-    @message.user_target = User.find(params[:message][:user_id_target])
+    @message.target = User.find(params[:message][:target_id])
     @message.user = @current_user
+    @message.user_read = 0;
+    @message.target_read = 0;
+    @message.user_deleted = 0;
+    @message.target_deleted = 0;
     if @message.save
       flash[:notice] = "Successfully created message."
       redirect_to user_url(@current_user)
