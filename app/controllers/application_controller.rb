@@ -8,6 +8,11 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
 
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = exception.message
+    redirect_to users_url
+  end
+
    filter_parameter_logging :password, :password_confirmation
    helper_method :current_user_session, :current_user
 
@@ -24,17 +29,17 @@ class ApplicationController < ActionController::Base
 
 	def require_no_user
       	if current_user
-        		flash[:notice] = "You must be logged out to access this page"
-       		redirect_to users_url
-        		return false
-    		  end
+        	flash[:notice] = "You must be logged out to access this page"
+          redirect_to users_url
+        	return false
+    		end
     end
 
 	def require_user
         unless current_user
         	flash[:notice] = "You must be logged in to access this page"
-      	redirect_to new_user_session_url
-       	return false
+          redirect_to new_user_session_url
+          return false
         end
       end
 end

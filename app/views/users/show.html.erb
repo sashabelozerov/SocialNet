@@ -6,7 +6,7 @@
   <%=h @user.name %>'s Page
 </h1>
 
-<% if @user == @current_user %>
+<% if can? :update, @user %>
 <%= link_to 'Edit profile', profile_edit_url %>
 
 <h2>Messages:</h2>
@@ -32,7 +32,7 @@
 <% for event in @user.events_as_author %>
 <tr>
 <td><%= link_to "#{event.title}", user_event_url(@user, event) %></td>
-<% if @user == @current_user %>
+<% if can? :destroy, event %>
 	<td><%= link_to 'Cancel event', event, :method => :delete %></td>
 <% end %>
 </tr>

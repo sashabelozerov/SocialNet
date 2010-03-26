@@ -12,8 +12,8 @@ class User < ActiveRecord::Base
 	has_many :friends, :through => :friendships
 	
 	has_many :events_as_author, :class_name => "Event", :foreign_key => "user_id", :dependent => :destroy
-	#has_many :event_users
-	#has_many :events_as_attendee, :source => :event, :through => :event_users
+	has_many :events_users, :dependent => :destroy
+	has_many :events_as_attendee, :source => "Event", :through => :events_users
 	
 	has_many :comments, :dependent => :destroy
 

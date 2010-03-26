@@ -23,8 +23,10 @@
 
 <p>
   <%= link_to "Comments", event_comments_url(@event) %>
-  <% if @event.author == @current_user %>
+  <% if can? :update, @event %>
 	| <%= link_to "Edit", edit_user_event_path(@user,@event) %> |
+  <% end %>
+  <% if can? :destroy, @event %>
 	<%= link_to "Cancel event", @event, :confirm => 'Are you sure?', :method => :delete %>
   <% end %>
 </p>

@@ -3,9 +3,9 @@ class Ability
 
   def initialize(user)
 
-    can :read, User
+    can [:read, :create], User
     can [:update, :destroy], User do |u|
-      u == user
+      u && u == user
     end
 
     can [:read, :create], Event
@@ -18,9 +18,13 @@ class Ability
       comment && comment.user == user
     end
 
-    can :create, Message
-    can [:read, :delete_from_mailbox], Message do |message|
-      message && (Message.user == user || Message.target == user)
+    can [:read, :create], Message
+    can :delete_from_mailbox, Message do |message|
+      message && ( message.user == user || message.target == user )
+    end
+
+    can :manage, Friendship do |friendship|
+      friedship && friendship.user == user
     end
 
   end

@@ -5,6 +5,7 @@ class MessagesController < ApplicationController
   before_filter :get_message, :only => [:show, :destroy, :delete_from_mailbox]
 
   def delete_from_mailbox
+    unauthorized! if cannot? :delete_from_mailbox, @message
     if @current_user.target?(@message)
       @message.update_attribute(:target_deleted, 1)
     else
@@ -14,11 +15,13 @@ class MessagesController < ApplicationController
   end
 
   def index
+    unauthorized! if cannot? :read, Message
     @mailbox = params[:mailbox]
     @messages = @current_user.messages(@mailbox)
   end
   
   def show
+    unauthorized! if cannot? :read, @message
     if @current_user.target?(@message)
       @message.update_attribute(:target_read, 1)
     else
@@ -27,11 +30,11 @@ class MessagesController < ApplicationController
   end
   
   def new
+    unauthorized! if cannot? :create, Message
     @message = @current_user.messages_as_author.build
   end
   
   def create
-	
     @message = @current_user.messages_as_author.build(params[:message])
     @message.target = User.find(params[:message][:target_id])
     @message.user = @current_user
@@ -48,6 +51,7 @@ class MessagesController < ApplicationController
   end
   
   def destroy
+    unauthorized! if cannot? :destroy, Message
     @message.destroy
     flash[:notice] = "Successfully destroyed message."
     redirect_to user_url(@current_user)

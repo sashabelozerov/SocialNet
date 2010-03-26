@@ -5,16 +5,20 @@ class EventsController < ApplicationController
 
   before_filter :get_user, :only => [:index, :show]
   before_filter :get_event, :only => [:edit, :update, :destroy]
-	
+
+
   def index
+     unauthorized! if cannot? :read, Event
     @events = @user.events_as_author
   end
   
   def show
+     unauthorized! if cannot? :read, Event
     @event = @user.events_as_author.find(params[:id])
   end
   
   def new
+     unauthorized! if cannot? :create, Event
     @event = @current_user.events_as_author.new
   end
   
@@ -29,6 +33,7 @@ class EventsController < ApplicationController
   end
   
   def edit
+    unauthorized! if cannot? :update, @event
   end
   
   def update
@@ -41,6 +46,7 @@ class EventsController < ApplicationController
   end
   
   def destroy
+    unauthorized! if cannot? :destroy, @event
     @event.destroy
     flash[:notice] = "Successfully destroyed event."
     redirect_to @current_user
