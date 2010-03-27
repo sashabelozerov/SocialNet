@@ -1,6 +1,6 @@
-class CreateEventsUsers < ActiveRecord::Migration
+class CreateEventUsers < ActiveRecord::Migration
   def self.up
-    create_table :events_users do |t|
+    create_table :event_users do |t|
       t.integer :user_id
       t.integer :event_id
 
@@ -9,6 +9,6 @@ class CreateEventsUsers < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :events_users
+    drop_table :event_users
   end
 end

@@ -7,11 +7,13 @@
 </h1>
 
 <% if can? :update, @user %>
-<%= link_to 'Edit profile', profile_edit_url %>
+  <%= link_to 'Edit profile', profile_edit_url %>
+<%  end %>
 
-<h2>Messages:</h2>
-<%= link_to 'Inbox', user_messages_url(@user, :mailbox => "inbox") %><br />
-<%= link_to 'Sent', user_messages_url(@user, :mailbox => "sent") %>
+<% if can? :read, Message %>
+  <h2>Messages:</h2>
+  <%= link_to 'Inbox', user_messages_url(@user, :mailbox => "inbox") %><br />
+  <%= link_to 'Sent', user_messages_url(@user, :mailbox => "sent") %>
 <%end%>
 
 <h2>Friends:</h2>

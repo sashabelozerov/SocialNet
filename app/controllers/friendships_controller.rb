@@ -4,6 +4,7 @@ class FriendshipsController < ApplicationController
 	
   def create
     @friendship = @current_user.friendships.build(:friend_id => params[:friend_id])
+    unauthorized! if cannot? :create, @friendship
     if @friendship.save
       flash[:notice] = "Added friend"
     else
@@ -14,6 +15,7 @@ class FriendshipsController < ApplicationController
   
   def destroy
     @friendship = @current_user.friendships.find(params[:id])
+    unauthorized! if cannot? :destroy, @friendship
     @friendship.destroy
     flash[:notice] = "Removed friendship."
     redirect_to user_url(@current_user)

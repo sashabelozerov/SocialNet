@@ -23,8 +23,8 @@ class Ability
       message && ( message.user == user || message.target == user )
     end
 
-    can :manage, Friendship do |friendship|
-      friedship && friendship.user == user
+    can [:create, :destroy], Friendship do |friendship|
+      friendship && friendship.user == user
     end
 
   end
