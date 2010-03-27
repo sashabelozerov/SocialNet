@@ -22,27 +22,31 @@ class MessagesController < ApplicationController
   
   def show
     unauthorized! if cannot? :read, @message
-    if @current_user.target?(@message)
+    if @current_user.target?(@message) && @message.target_read == 0
       @message.update_attribute(:target_read, 1)
     else
-      @message.update_attribute(:user_read, 1)
+      if @current_user.author?(@message) && @message.user_read == 0
+        @message.update_attribute(:user_read, 1)
+      end
     end
   end
   
   def new
     if params[:reply_to]
-      in_reply_to = Message.find_by_id(params[:reply_to])
+      @in_reply_to = Message.find_by_id(params[:reply_to])
     end
-    if in_reply_to
-      @message = in_reply_to.children[].built
+    if @in_reply_to
+      @message = @in_reply_to.children.build
+      session[:reply_to] = @in_reply_to
     else
       @message = @current_user.messages_as_author.build
     end
   end
   
   def create
-    if params[:reply_to]
-      in_reply_to = Message.find_by_id(params[:reply_to])
+    if session[:reply_to]
+      in_reply_to = Message.find_by_id(session[:reply_to])
+      session[:reply_to] = nil
     end
     @message = Message.new_reply(@current_user, in_reply_to, params)
     if @message.save

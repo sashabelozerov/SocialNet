@@ -10,8 +10,10 @@
     <%= f.label :content %><br />
     <%= f.text_area :content %>
   </p>
+  <% unless @in_reply_to %>
   <p>
   <%= f.select :target_id, User.all.collect{|i| [i.name, i.id]} %>
   </p>
+  <% end %>
   <p><%= f.submit "Send" %></p>
 <% end %>

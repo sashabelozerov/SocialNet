@@ -11,7 +11,7 @@ class Message < ActiveRecord::Base
 
     if in_reply_to
       return nil if in_reply_to.target != sender #can only reply to messages you received
-      message = in_reply_to.children.built(params[:message])
+      message = in_reply_to.children.build(params[:message])
       message.target = User.find(in_reply_to.user_id)
       message.user = sender
       message.title = ''
