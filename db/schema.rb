@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100326174327) do
+ActiveRecord::Schema.define(:version => 20100327125420) do
 
   create_table "comments", :force => true do |t|
     t.text     "content"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20100326174327) do
     t.integer  "target_deleted"
     t.integer  "user_deleted"
     t.integer  "target_id"
+    t.integer  "parent_id"
   end
 
   create_table "users", :force => true do |t|

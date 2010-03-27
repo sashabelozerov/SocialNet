@@ -30,18 +30,21 @@ class MessagesController < ApplicationController
   end
   
   def new
-    unauthorized! if cannot? :create, Message
-    @message = @current_user.messages_as_author.build
+    if params[:reply_to]
+      in_reply_to = Message.find_by_id(params[:reply_to])
+    end
+    if in_reply_to
+      @message = in_reply_to.children[].built
+    else
+      @message = @current_user.messages_as_author.build
+    end
   end
   
   def create
-    @message = @current_user.messages_as_author.build(params[:message])
-    @message.target = User.find(params[:message][:target_id])
-    @message.user = @current_user
-    @message.user_read = 0;
-    @message.target_read = 0;
-    @message.user_deleted = 0;
-    @message.target_deleted = 0;
+    if params[:reply_to]
+      in_reply_to = Message.find_by_id(params[:reply_to])
+    end
+    @message = Message.new_reply(@current_user, in_reply_to, params)
     if @message.save
       flash[:notice] = "Successfully created message."
       redirect_to user_url(@current_user)

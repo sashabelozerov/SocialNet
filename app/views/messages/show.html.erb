@@ -9,6 +9,14 @@
   <%=h @message.content %>
 </p>
 
+<%  for reply in @message.children %>
+  <% "-------------" %>
+  <% reply.content %>
+<% end %>
+
+<p>
+  <%= link_to "Reply", new_user_message_path(@current_user, :reply_to => @message.id) %>
+</p>
 <p>
   <%= link_to "Back to profile", user_url(@current_user) %>
 </p>
