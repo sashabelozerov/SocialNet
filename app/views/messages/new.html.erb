@@ -2,10 +2,12 @@
 
 <% form_for :message, :url => user_messages_path(@current_user, :mailbox => "sent") do |f| %>
   <%= f.error_messages %>
+  <% unless @in_reply_to %>
   <p>
     <%= f.label :title %><br />
     <%= f.text_field :title %>
   </p>
+  <% end %>
   <p>
     <%= f.label :content %><br />
     <%= f.text_area :content %>

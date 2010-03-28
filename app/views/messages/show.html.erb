@@ -11,7 +11,7 @@
 
 <% for child in @message.children %>
   <%= child.content %><br />
-  <%= "-------------" %>
+  <%= "-------------" %><br />
 <% end %>
   
 <% if @current_user.target?(@message) %>
