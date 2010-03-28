@@ -4,14 +4,19 @@
   <strong>Title:</strong>
   <%=h @message.title %>
 </p>
-<p>
-  <%= @message.content %><br />
-  <%= "-------------" %><br />
+
+
+<%= @message.content %><br />
+<%= "-------------" %><br />
+<table>
   <% for child in @message.children %>
-    <%= child.content %><br />
-    <%= "-------------" %><br />
+  <tr>
+    <td> <%= link_to "#{child.user.name}", user_url(child.user) %>:</td>
+    <td><%= child.content %></td>
+  </tr>
   <% end %>
-</p>
+</table>
+
 <% if @current_user.target?(@message) %>
 <p>
   <%= link_to "Reply", new_user_message_path(@current_user, :reply_to => @message.id) %>
