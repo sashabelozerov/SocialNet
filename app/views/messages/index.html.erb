@@ -14,7 +14,13 @@
   <% if message.target_deleted == 0 && @current_user == message.target%>
   <tr>
       <td><%=h message.title %></td>
-      <td><%=h message.content %></td>
+      <td>
+      <% if message.children.any? %>
+        <%= message.children[-1].content %>
+      <% else %>
+        <%= message.content %>
+      <% end %>
+      </td>
       <%if @mailbox == "sent" %>
         <td><%=h message.target.name %></td>
         <td><% if message.user_read == 0 %>
@@ -33,7 +39,13 @@
   <% if message.user_deleted == 0 && @current_user == message.user%>
     <tr>
       <td><%=h message.title %></td>
-      <td><%=h message.content %></td>
+      <td>
+      <% if message.children.any? %>
+        <%= message.children[-1].content %>
+      <% else %>
+        <%= message.content %>
+      <% end %>
+      </td>
       <%if @mailbox == "sent" %>
         <td><%=h message.target.name %></td>
         <td><% if message.user_read == 0 %>

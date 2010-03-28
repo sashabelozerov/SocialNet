@@ -33,11 +33,11 @@ class MessagesController < ApplicationController
   
   def new
     if params[:reply_to]
-      @in_reply_to = Message.find_by_id(params[:reply_to])
+      @in_reply_to = Message.find(params[:reply_to])
     end
     if @in_reply_to
       @message = @in_reply_to.children.build
-      session[:reply_to] = @in_reply_to
+      session[:reply_to] = @in_reply_to.id
     else
       @message = @current_user.messages_as_author.build
     end
@@ -45,15 +45,17 @@ class MessagesController < ApplicationController
   
   def create
     if session[:reply_to]
-      in_reply_to = Message.find_by_id(session[:reply_to])
+      in_reply_to = Message.find(session[:reply_to])
       session[:reply_to] = nil
     end
     @message = Message.new_reply(@current_user, in_reply_to, params)
-    if @message.save
+    #redirect_to users_url and return if @message == nil
+    if @message && @message.save
       flash[:notice] = "Successfully created message."
       redirect_to user_url(@current_user)
     else
-      render :action => 'new'
+      flash[:error] = "Message was NOT created."
+      redirect_to user_url(@current_user)
     end
   end
   

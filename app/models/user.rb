@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 	has_many :comments, :dependent => :destroy
 
   def messages(mailbox)
-    replies = Message.all(:order => "created_at", :conditions => "parent_id <> 0")
+    replies = Message.all(:conditions => "parent_id <> 0")
     
     if mailbox == "sent"
       self.messages_as_author - replies

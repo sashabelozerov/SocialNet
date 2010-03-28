@@ -5,15 +5,13 @@
   <%=h @message.title %>
 </p>
 <p>
-  <strong>Content:</strong>
-  <%=h @message.content %>
-</p>
-
-<% for child in @message.children %>
-  <%= child.content %><br />
+  <%= @message.content %><br />
   <%= "-------------" %><br />
-<% end %>
-  
+  <% for child in @message.children %>
+    <%= child.content %><br />
+    <%= "-------------" %><br />
+  <% end %>
+</p>
 <% if @current_user.target?(@message) %>
 <p>
   <%= link_to "Reply", new_user_message_path(@current_user, :reply_to => @message.id) %>

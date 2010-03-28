@@ -15,7 +15,10 @@ class Message < ActiveRecord::Base
       message.target = User.find(in_reply_to.user_id)
       message.user = sender
       message.title = ''
+      in_reply_to.update_attribute(:user_id, sender.id)
+      in_reply_to.update_attribute(:target_id, message.target_id)
     else
+      return nil if params[:message][:target_id] == params[:user_id]
       message = sender.messages_as_author.build(params[:message])
       message.target = User.find(params[:message][:target_id])
       message.user = sender
