@@ -39,6 +39,11 @@
 <% end %>
 </tr>
 <% end %>
+<% for event in @user.events_as_attendee %>
+<tr>
+  <td><%= link_to "#{event.title}", user_event_url(@user, event) %></td>
+</tr>
+<% end %>
 </table>
 
 <h2>Photos:</h2>

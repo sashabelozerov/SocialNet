@@ -18,11 +18,28 @@
 </p>
 <p>
   <strong>Creator:</strong>
-  <%=h @event.author.name %>
+  <%=h @event.user.name %>
 </p>
 
+<h2>Attendees:</h2>
 <p>
-  <%= link_to "Comments", event_comments_url(@event) %>
+<% for attendee in @event.attendees %>
+  <%= link_to "#{attendee.name}", user_url(attendee) %>
+  <%= link_to 'deny', user_deny_url(@user, @event, :target_id => attendee.id) %> <br />
+<% end %>
+</p>
+<p>
+------<br />
+<% for target in User.all %>
+  <% unless target.author?(@event) %>
+    <%= "#{target.name}" %>
+    <%= link_to "invite", user_invite_url(@user, @event, :target_id => target.id) %><br />
+  <% end %>
+<% end %>
+</p>
+<p>
+  <%= link_to "Comments", event_comments_url(@event) %> |
+  <%= link_to "Invite" %>
   <% if can? :update, @event %>
 	| <%= link_to "Edit", edit_user_event_path(@user,@event) %> |
   <% end %>

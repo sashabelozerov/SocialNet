@@ -4,17 +4,17 @@ class EventsController < ApplicationController
 	before_filter :current_user
 
   before_filter :get_user, :only => [:index, :show]
-  before_filter :get_event, :only => [:edit, :update, :destroy]
+  before_filter :get_event, :only => [:edit, :update, :destroy, :show]
 
 
   def index
      unauthorized! if cannot? :read, Event
-    @events = @user.events_as_author
+    @events_as_author = @user.events_as_author
+    @events_as_attendee = @user.events_as_attendee
   end
   
   def show
-     unauthorized! if cannot? :read, Event
-    @event = @user.events_as_author.find(params[:id])
+    unauthorized! if cannot? :read, Event
   end
   
   def new
@@ -59,7 +59,7 @@ class EventsController < ApplicationController
   end
 
   def get_event
-    @event = @current_user.events_as_author.find(params[:id])
+    @event = Event.find(params[:id])
   end
 
 end

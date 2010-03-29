@@ -10,7 +10,7 @@ class Ability
 
     can [:read, :create], Event
     can [:update, :destroy], Event do |event|
-      event && event.author == user
+      event && event.user == user
     end
 
     can [:read, :create], Comment
@@ -23,7 +23,8 @@ class Ability
       message && ( message.user == user || message.target == user )
     end
 
-    can [:create, :destroy], Friendship do |friendship|
+    can :create, Friendship
+    can :destroy, Friendship do |friendship|
       friendship && friendship.user == user
     end
 

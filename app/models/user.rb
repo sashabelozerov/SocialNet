@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
 	
 	has_many :events_as_author, :class_name => "Event", :foreign_key => "user_id", :dependent => :destroy
 	has_many :event_users
-	has_many :events_as_attendee, :source => "Event", :through => :event_users
+	has_many :events_as_attendee, :source => :event, :through => :event_users
 	
 	has_many :comments, :dependent => :destroy
 
@@ -31,8 +31,15 @@ class User < ActiveRecord::Base
     message.target == self
   end
 
-  def author?(message)
-    message.user == self
+  def author?(stuff)
+    stuff.user == self
   end
-  
+
+  def invite(event)
+      unless event.event_users.find_by_user_id(self.id)
+      @eu = event.event_users.build(:user_id => self.id)
+      @eu.save
+    end
+  end
+
 end
