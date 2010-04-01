@@ -38,8 +38,10 @@
 <% end %>
 </p>
 <p>
+  <!--
   <%= link_to "Comments", event_comments_url(@event) %> |
   <%= link_to "Invite" %>
+  -->
   <% if can? :update, @event %>
 	| <%= link_to "Edit", edit_user_event_path(@user,@event) %> |
   <% end %>
@@ -49,6 +51,19 @@
 </p>
 
 <h2>Comments:</h2>
+<%= link_to "Add Comment", new_event_comment_url(@event) %>
+<table>
+  <tr>
+    <th>Content</th>
+    <th>User</th>
+  </tr>
 <% for comment in @event.comments %>
-
+ <tr>
+      <td><%=h comment.content %></td>
+      <td><%=h "#{User.find(comment.user_id).name}" %></td>
+      <td><%= link_to "Show", comment %></td>
+      <td><%= link_to "Edit", edit_comment_path(comment) %></td>
+      <td><%= link_to "Destroy", comment, :confirm => 'Are you sure?', :method => :delete %></td>
+ </tr>
 <% end %>
+ </table>
