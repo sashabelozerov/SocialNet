@@ -25,7 +25,7 @@
 <p>
 <% for attendee in @event.attendees %>
   <%= link_to "#{attendee.name}", user_url(attendee) %>
-  <%= link_to 'deny', user_deny_url(@user, @event, :target_id => attendee.id) %> <br />
+  <%= link_to 'deny', deny_invitation_to_event_url(@user, @event, :target_id => attendee.id) %> <br />
 <% end %>
 </p>
 <p>
@@ -33,7 +33,7 @@
 <% for target in User.all %>
   <% unless target.author?(@event) %>
     <%= "#{target.name}" %>
-    <%= link_to "invite", user_invite_url(@user, @event, :target_id => target.id) %><br />
+    <%= link_to "invite", invite_user_to_event_url(@user, @event, :target_id => target.id) %><br />
   <% end %>
 <% end %>
 </p>
@@ -61,9 +61,9 @@
  <tr>
       <td><%=h comment.content %></td>
       <td><%=h "#{User.find(comment.user_id).name}" %></td>
-      <td><%= link_to "Show", comment %></td>
-      <td><%= link_to "Edit", edit_comment_path(comment) %></td>
-      <td><%= link_to "Destroy", comment, :confirm => 'Are you sure?', :method => :delete %></td>
+      <% if can? :destroy, comment %>
+      <td><%= link_to "Destroy", user_comment_url(comment.user_id, comment), :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
  </tr>
 <% end %>
  </table>

@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   
-  map.resources :comments
+  #map.resources :comments
 
   map.resources :events, :has_many => :comments
 
@@ -19,8 +19,8 @@ map.logout 'logout', :controller => 'user_sessions', :action => 'destroy'
 map.profile_edit 'profile/edit', :controller => 'users', :action => 'edit'
 map.profile_destroy 'profile/destroy', :controller => 'users', :action => 'destroy'
 map.message_delete 'messages/:id/delete', :controller => 'messages', :action => 'delete_from_mailbox'
-map.user_invite 'users/:user_id/events/:id/invite', :controller => 'event_users', :action => 'create'
-map.user_deny 'users/:user_id/events/:id/deny', :controller => 'event_users', :action => 'destroy'
+map.invite_user_to_event 'users/:user_id/events/:id/invite', :controller => 'event_users', :action => 'create'
+map.deny_invitation_to_event 'users/:user_id/events/:id/deny', :controller => 'event_users', :action => 'destroy'
 
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'

@@ -13,9 +13,14 @@ class Ability
       event && event.user == user
     end
 
+    can :create, EventUser
+    can :destroy, EventUser do |event_user|
+        event_user && ((event_user.user == user) || (event_user.event.user == user))
+    end
+
     can [:read, :create], Comment
     can :destroy, Comment do |comment|
-      comment && comment.user == user
+      comment && (comment.user == user || comment.commentable.user == user)
     end
 
     can [:read, :create], Message
