@@ -1,0 +1,54 @@
+<h1>Photo:</h1>
+
+<p>
+  <strong>Title:</strong>
+  <%=h @photo.title %>
+</p>
+<p>
+  <strong>Creator:</strong>
+  <%=h @photo.user.name %>
+</p>
+
+<h2>Signed users:</h2>
+<p>
+<% for signed in @photo.signed_users %>
+  <%= link_to "#{signed.name}", user_url(signed) %>
+  <%= link_to 'deny', deny_sing_to_photo_url(@user, @photo, :target_id => signed.id) %> <br />
+<% end %>
+</p>
+<p>
+------<br />
+<% for target in User.all %>
+  <% unless target.author?(@photo) %>
+    <%= "#{target.name}" %>
+    <%= link_to "sign", sign_user_to_photo_url(@user, @photo, :target_id => target.id) %><br />
+  <% end %>
+<% end %>
+</p>
+<p>
+
+  <% if can? :update, @photo %>
+	| <%= link_to "Edit", edit_user_photo_path(@user,@photo) %> |
+  <% end %>
+  <% if can? :destroy, @photo %>
+	<%= link_to "Delete photo", @photo, :confirm => 'Are you sure?', :method => :delete %>
+  <% end %>
+</p>
+
+<h2>Comments:</h2>
+<%= link_to "Add Comment", new_photo_comment_url(@photo) %>
+<table>
+  <tr>
+    <th>Content</th>
+    <th>User</th>
+  </tr>
+<% for comment in @photo.comments %>
+ <tr>
+      <td><%=h comment.content %></td>
+      <td><%=h "#{User.find(comment.user_id).name}" %></td>
+      <% if can? :destroy, comment %>
+      <td><%= link_to "Destroy", user_comment_url(comment.user_id, comment), :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
+ </tr>
+<% end %>
+ </table>

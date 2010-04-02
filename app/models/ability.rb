@@ -18,6 +18,16 @@ class Ability
         event_user && ((event_user.user == user) || (event_user.event.user == user))
     end
 
+    can [:read, :create], Photo
+    can [:update, :destroy], Photo do |photo|
+      photo && photo.user == user
+    end
+
+    can :create, PhotoUser
+    can :destroy, :PhotoUser do |photo_user|
+      photo_user && (photo_user.user == user || photo_user.photo.user == user)
+    end
+
     can [:read, :create], Comment
     can :destroy, Comment do |comment|
       comment && (comment.user == user || comment.commentable.user == user)

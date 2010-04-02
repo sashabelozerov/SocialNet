@@ -14,7 +14,11 @@ class User < ActiveRecord::Base
 	has_many :events_as_author, :class_name => "Event", :foreign_key => "user_id", :dependent => :destroy
 	has_many :event_users
 	has_many :events_as_attendee, :source => :event, :through => :event_users
-	
+
+  has_many :photos_as_author, :class_name => "Photo", :foreign_key => "user_id", :dependent => :destroy
+  has_many :photo_users
+  has_many :photos_as_signed, :source => :photo, :through => :photo_users
+  
 	has_many :comments, :dependent => :destroy
 
   def messages(mailbox)
@@ -36,9 +40,16 @@ class User < ActiveRecord::Base
   end
 
   def invite(event)
-      unless event.event_users.find_by_user_id(self.id)
+    unless event.event_users.find_by_user_id(self.id)
       @eu = event.event_users.build(:user_id => self.id)
       @eu.save
+    end
+  end
+
+  def sign(photo)
+    unless photo.photo_users.find_by_user_id(self.id)
+      @pu = photo.photo_users.build(:user_id => self.id)
+      @pu.save
     end
   end
 

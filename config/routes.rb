@@ -1,5 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
   
+  map.resources :photos, :has_many => :comments
+
+  
   #map.resources :comments
 
   map.resources :events, :has_many => :comments
@@ -10,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # The priority is based upon order of creation: first created -> highest priority.
 
-map.resources :users, :has_many => [:messages, :events, :comments], :except => [:edit, :destroy]
+map.resources :users, :has_many => [:messages, :events, :photos, :comments], :except => [:edit, :destroy]
 map.resource :user_session, :only => :create
 
 map.login 'login', :controller => 'user_sessions', :action => 'new'
@@ -21,6 +24,8 @@ map.profile_destroy 'profile/destroy', :controller => 'users', :action => 'destr
 map.message_delete 'messages/:id/delete', :controller => 'messages', :action => 'delete_from_mailbox'
 map.invite_user_to_event 'users/:user_id/events/:id/invite', :controller => 'event_users', :action => 'create'
 map.deny_invitation_to_event 'users/:user_id/events/:id/deny', :controller => 'event_users', :action => 'destroy'
+map.sign_user_to_photo 'users/:user_id/photos/:id/sign', :controller => 'photo_users', :action => 'create'
+map.deny_sing_to_photo 'users/:user_id/photos/:id/deny', :controller => 'photo_users', :action => 'destroy'
 
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'

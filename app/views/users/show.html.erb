@@ -47,5 +47,22 @@
 </table>
 
 <h2>Photos:</h2>
-
+<% if @user == @current_user %>
+	<%= link_to 'Add photo', new_user_photo_url(@user) %><br />
+<% end %>
+<table>
+<% for photo in @user.photos_as_author %>
+<tr>
+<td><%= link_to "#{photo.title}", user_photo_url(@user, photo) %></td>
+<% if can? :destroy, photo %>
+	<td><%= link_to 'Delete photo', photo, :method => :delete %></td>
+<% end %>
+</tr>
+<% end %>
+<% for photo in @user.photos_as_signed %>
+<tr>
+  <td><%= link_to "#{photo.title}", user_photo_url(@user, photo) %></td>
+</tr>
+<% end %>
+</table>
 
