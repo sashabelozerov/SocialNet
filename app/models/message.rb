@@ -17,7 +17,10 @@ class Message < ActiveRecord::Base
       message.title = ''
       in_reply_to.update_attribute(:user_id, sender.id)
       in_reply_to.update_attribute(:target_id, message.target_id)
-      in_reply_to.update_attribute(:target_read, 0)
+      in_reply_to.update_attribute(:target_read, 0) if in_reply_to.target_read == 1
+      in_reply_to.update_attribute(:target_deleted, 0) if in_reply_to.target_deleted == 1
+      in_reply_to.update_attribute(:user_deleted, 0) if in_reply_to.user_deleted == 1
+      
     else
       return nil if params[:message][:target_id] == params[:user_id]
       message = sender.messages_as_author.build(params[:message])
