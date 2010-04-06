@@ -53,6 +53,7 @@
 <table>
 <% for photo in @user.photos_as_author %>
 <tr>
+<td><%= image_tag photo.image.url(:small) %></td>
 <td><%= link_to "#{photo.title}", user_photo_url(@user, photo) %></td>
 <% if can? :destroy, photo %>
 	<td><%= link_to 'Delete photo', photo, :method => :delete %></td>
@@ -61,6 +62,7 @@
 <% end %>
 <% for photo in @user.photos_as_signed %>
 <tr>
+  <td><%= image_tag photo.image.url(:small) %></td>
   <td><%= link_to "#{photo.title}", user_photo_url(@user, photo) %></td>
 </tr>
 <% end %>

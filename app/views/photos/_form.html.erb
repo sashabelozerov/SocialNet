@@ -1,8 +1,11 @@
-<% form_for [@user,@photo] do |f| %>
+<% form_for [@user,@photo], :html => { :multipart => true} do |f| %>
   <%= f.error_messages %>
   <p>
     <%= f.label :title %><br />
     <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.file_field :image %>
   </p>
   <p><%= f.submit "Submit" %></p>
 <% end %>

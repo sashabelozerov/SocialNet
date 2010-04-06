@@ -5,6 +5,9 @@
   <%=h @photo.title %>
 </p>
 <p>
+  <%= image_tag @photo.image.url %>
+</p>
+<p>
   <strong>Creator:</strong>
   <%=h @photo.user.name %>
 </p>
