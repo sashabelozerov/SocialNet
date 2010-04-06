@@ -18,11 +18,12 @@ class EventsController < ApplicationController
   end
   
   def new
-     unauthorized! if cannot? :create, Event
+    unauthorized! if cannot? :create, Event
     @event = @current_user.events_as_author.new
   end
   
   def create
+    unauthorized! if cannot? :create, Event
     @event = @current_user.events_as_author.new(params[:event])
     if @event.save
       flash[:notice] = "Successfully created event."
@@ -37,6 +38,7 @@ class EventsController < ApplicationController
   end
   
   def update
+    unauthorized! if cannot? :update, @event
     if @event.update_attributes(params[:event])
       flash[:notice] = "Successfully updated event."
       redirect_to user_event_url(@current_user, @event)
