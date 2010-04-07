@@ -14,9 +14,12 @@
 
 <h2>Signed users:</h2>
 <p>
-<% for signed in @photo.signed_users %>
-  <%= link_to "#{signed.name}", user_url(signed) %>
-  <%= link_to 'deny', deny_sing_to_photo_url(@user, @photo, :target_id => signed.id) %> <br />
+<% for photo_user in @photo.photo_users %>
+  <%= link_to "#{photo_user.user.name}", user_url(photo_user.user) %>
+  <% if can? :destroy, photo_user %>
+    <%= link_to 'deny', deny_sing_to_photo_url(@user, @photo, :target_id => photo_user.user.id) %>
+  <% end %>
+   <br />
 <% end %>
 </p>
 <p>

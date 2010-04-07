@@ -4,22 +4,25 @@ class UsersController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :current_user, :only => [:index, :destroy, :edit, :update]
 
-  load_and_authorize_resource
 
   def index
+    unauthorized! if cannot? :show, User
     @users = User.all
   end
 
   def show
-    #@user = User.find(params[:id])
+    @user = User.find(params[:id])
+    unauthorized! if cannot? :show, @user
   end
 
   def new
-    #@user = User.new
+    unauthorized! if cannot? :create, User
+    @user = User.new
   end
 
   def create
-  	#@user = User.new(params[:user])
+    unauthorized! if cannot? :create, User
+  	@user = User.new(params[:user])
     if @user.save
      	flash[:notice] = "Account registered successful"
      	redirect_to users_url
@@ -29,9 +32,12 @@ class UsersController < ApplicationController
   end
 
   def edit
+    unauthorized! if cannot? :update, @current_user
   end
   
   def update
+    @user = User.find(params[:id])
+    unauthorized! if cannot? :update, @user
     if @user.update_attributes(params[:user])
       flash[:notice] = 'Successfully updated profile.'
       redirect_to @current_user
@@ -41,7 +47,8 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    @user.destroy
+    unauthorized! if cannot? :destroy, @current_user
+    @current_user.destroy
     redirect_to users_url
   end
 
