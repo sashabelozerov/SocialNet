@@ -22,12 +22,20 @@ class User < ActiveRecord::Base
 	has_many :comments, :dependent => :destroy
 
   def messages(mailbox)
-    replies = Message.all(:conditions => "parent_id <> 0")
+    replies_as_author = Message.find_all_by_user_id(self.id, :conditions => "parent_id <> 0")
+    replies_as_recipient = Message.find_all_by_target_id(self.id, :conditions => "parent_id <> 0")
+
+    unless replies_as_author
+       replies_as_author = []
+    end
+    unless replies_as_recipient
+      replies_as_recipient = []
+    end
     
     if mailbox == "sent"
-      self.messages_as_author - replies
+      self.messages_as_author - replies_as_author
    	else
-      self.messages_as_recipient - replies
+      self.messages_as_recipient - replies_as_recipient
    	end
   end
 
