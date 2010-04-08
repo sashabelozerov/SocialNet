@@ -1,6 +1,6 @@
 class Photo < ActiveRecord::Base
   #attr_accessible :title
-  has_attached_file :image, :styles => { :small => "100x100>" }
+  has_attached_file :image, :styles => { :small => "100x100>", :large => "640x480>" }
 
   #validates_attachment_presence :image
   #validates_attachment_size :image, :less_than => 3.megabytes

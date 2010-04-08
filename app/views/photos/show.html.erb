@@ -5,14 +5,14 @@
   <%=h @photo.title %>
 </p>
 <p>
-  <%= image_tag @photo.image.url %>
+  <%= image_tag @photo.image.url(:large) %>
 </p>
 <p>
   <strong>Creator:</strong>
   <%=h @photo.user.name %>
 </p>
 
-<h2>Signed users:</h2>
+<h2>Tagged users:</h2>
 <p>
 <% for photo_user in @photo.photo_users %>
   <% if photo_user.accepted? %>
