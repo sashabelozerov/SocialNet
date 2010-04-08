@@ -24,7 +24,7 @@ class Ability
     end
 
     can :create, PhotoUser
-    can :destroy, :PhotoUser do |photo_user|
+    can :destroy, PhotoUser do |photo_user|
       photo_user && ((photo_user.user == user) || (photo_user.photo.user == user))
     end
 

@@ -23,12 +23,14 @@
 
 <h2>Attendees:</h2>
 <p>
-<% for attendee in @event.attendees %>
-  <%= link_to "#{attendee.name}", user_url(attendee) %>
-  <% if can? :destroy, attendee.event_users.find_by_event_id(@event.id) %>
-    <%= link_to 'deny', deny_invitation_to_event_url(@user, @event, :target_id => attendee.id) %>
-  <% end %>
+<% for event_user in @event.event_users %>
+  <% if event_user.accepted? %>
+    <%= link_to "#{event_user.user.name}", user_url(event_user.user) %>
+    <% if can? :destroy, event_user %>
+      <%= link_to 'Decline', decline_invitation_to_event_url(@user, @event, :target_id => event_user.user.id) %>
+    <% end %>
    <br />
+   <% end %>
 <% end %>
 </p>
 <p>

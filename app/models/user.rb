@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
   has_many :photos_as_author, :class_name => "Photo", :foreign_key => "user_id", :dependent => :destroy
   has_many :photo_users, :dependent => :destroy
-  has_many :photos_as_signed, :source => :photo, :through => :photo_users
+  has_many :photos_as_tagged, :source => :photo, :through => :photo_users
   
 	has_many :comments, :dependent => :destroy
 
@@ -37,20 +37,6 @@ class User < ActiveRecord::Base
 
   def author?(stuff)
     stuff.user == self
-  end
-
-  def invite(event)
-    unless event.event_users.find_by_user_id(self.id)
-      @eu = event.event_users.build(:user_id => self.id)
-      @eu.save
-    end
-  end
-
-  def sign(photo)
-    unless photo.photo_users.find_by_user_id(self.id)
-      @pu = photo.photo_users.build(:user_id => self.id)
-      @pu.save
-    end
   end
 
 end

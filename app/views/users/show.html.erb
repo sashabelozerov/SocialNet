@@ -39,10 +39,19 @@
 <% end %>
 </tr>
 <% end %>
-<% for event in @user.events_as_attendee %>
+<% for event_user in @user.event_users %>
+<% if event_user.accepted? || (@user == @current_user) %>
 <tr>
-  <td><%= link_to "#{event.title}", user_event_url(@user, event) %></td>
+  <td><%= link_to "#{event_user.event.title}", user_event_url(@user, event_user.event.id) %></td>
+  <% unless event_user.accepted? %>
+    <td> * </td>
+    <td><%= link_to "Accept", user_accept_invitation_to_event_url(@user, event_user.event.id) %></td>
+  <% end %>
+  <% if can? :destroy, event_user %>
+    <td><%= link_to "Decline", decline_invitation_to_event_url(@user, event_user.event.id, :target_id => event_user.user.id) %></td>
+  <% end %>
 </tr>
+<% end %>
 <% end %>
 </table>
 
@@ -60,11 +69,20 @@
 <% end %>
 </tr>
 <% end %>
-<% for photo in @user.photos_as_signed %>
+<% for photo_user in @user.photo_users %>
+<% if photo_user.accepted? || (@user == @current_user) %>
 <tr>
-  <td><%= image_tag photo.image.url(:small) %></td>
-  <td><%= link_to "#{photo.title}", user_photo_url(@user, photo) %></td>
+  <td><%= image_tag photo_user.photo.image.url(:small) %></td>
+  <td><%= link_to "#{photo_user.photo.title}", user_photo_url(@user, photo_user.photo.id) %></td>
+   <% unless photo_user.accepted? %>
+    <td> * </td>
+    <td><%= link_to "Accept", user_accept_tag_to_photo_url(@user, photo_user.photo.id) %></td>
+  <% end %>
+  <% if can? :destroy, photo_user %>
+    <td><%= link_to "Remove Tag", remove_tag_from_photo_url(@user, photo_user.photo.id, :target_id => photo_user.photo.id) %></td>
+  <% end %>
 </tr>
+<% end %>
 <% end %>
 </table>
 

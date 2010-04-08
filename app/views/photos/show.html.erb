@@ -15,11 +15,13 @@
 <h2>Signed users:</h2>
 <p>
 <% for photo_user in @photo.photo_users %>
-  <%= link_to "#{photo_user.user.name}", user_url(photo_user.user) %>
-  <% if can? :destroy, photo_user %>
-    <%= link_to 'deny', deny_sing_to_photo_url(@user, @photo, :target_id => photo_user.user.id) %>
-  <% end %>
+  <% if photo_user.accepted? %>
+    <%= link_to "#{photo_user.user.name}", user_url(photo_user.user) %>
+    <% if can? :destroy, photo_user %>
+      <%= link_to 'Remove Tag', remove_tag_from_photo_url(@user, @photo, :target_id => photo_user.user.id) %>
+    <% end %>
    <br />
+   <% end %>
 <% end %>
 </p>
 <p>
@@ -27,7 +29,7 @@
 <% for target in User.all %>
   <% unless target.author?(@photo) %>
     <%= "#{target.name}" %>
-    <%= link_to "sign", sign_user_to_photo_url(@user, @photo, :target_id => target.id) %><br />
+    <%= link_to "Tag this photo", tag_user_on_photo_url(@user, @photo, :target_id => target.id) %><br />
   <% end %>
 <% end %>
 </p>

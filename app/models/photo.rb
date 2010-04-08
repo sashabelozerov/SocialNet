@@ -8,8 +8,17 @@ class Photo < ActiveRecord::Base
   
   belongs_to :user
   has_many :photo_users, :dependent => :destroy
-  has_many :signed_users, :source => :user, :through => :photo_users
+  has_many :tagged_users, :source => :user, :through => :photo_users
 
   has_many :comments, :as => :commentable, :dependent => :destroy
-  
+
+
+
+  def tag(user)
+    unless user.photo_users.find_by_photo_id(self.id)
+      @pu = user.photo_users.build(:photo_id => self.id, :accepted => 0)
+      @pu.save
+    end
+  end
+
 end
