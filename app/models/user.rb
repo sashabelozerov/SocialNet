@@ -9,7 +9,9 @@ class User < ActiveRecord::Base
 	has_many :messages_as_recipient, :class_name => "Message", :foreign_key => "target_id", :dependent => :destroy
 
 	has_many :friendships, :dependent => :destroy
-	has_many :friends, :through => :friendships
+  has_many :accepted_friendships, :class_name => "Friendship", :conditions => "status = 'accepted'", :dependent => :destroy
+  has_many :requested_friendships, :class_name => "Friendship", :conditions => "status = 'requested'", :dependent => :destroy
+  has_many :pending_friendships, :class_name => "Friendship", :conditions => "status = 'pending'", :dependent => :destroy
 	
 	has_many :events_as_author, :class_name => "Event", :foreign_key => "user_id", :dependent => :destroy
 	has_many :event_users, :dependent => :destroy

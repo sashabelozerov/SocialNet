@@ -40,7 +40,7 @@ class Ability
 
     can :create, Friendship
     can :destroy, Friendship do |friendship|
-      friendship && friendship.user == user
+      friendship && (friendship.user == user || friendship.friend == user)
     end
 
   end

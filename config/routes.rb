@@ -29,6 +29,8 @@ map.tag_user_on_photo 'users/:user_id/photos/:id/tag', :controller => 'photo_use
 map.user_accept_tag_to_photo 'users/:user_id/photos/:id/accept', :controller => 'photo_users', :action => 'accept_tag'
 map.remove_tag_from_photo 'users/:user_id/photos/:id/remove', :controller => 'photo_users', :action => 'destroy'
 
+map.user_accept_friendship 'users/:user_id/friendships/:id/accept', :controller => 'friendships', :action => 'accept_friendship'
+map.decline_friendship 'users/:user_id/friendships/decline', :controller => 'friendships', :action => 'destroy', :method => :delete
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100408090529) do
+ActiveRecord::Schema.define(:version => 20100409144706) do
 
   create_table "comments", :force => true do |t|
     t.text     "content"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20100408090529) do
     t.integer  "friend_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "status"
   end
 
   create_table "messages", :force => true do |t|
