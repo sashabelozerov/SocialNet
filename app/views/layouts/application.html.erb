@@ -1,27 +1,44 @@
 <html>
 <head>
-<title><%= SocialNet %></title>
+<title>SocialNet</title>
 <%= stylesheet_link_tag 'blueprint/screen', :media => 'screen' %>
 <%= stylesheet_link_tag 'blueprint/print',  :media => 'print' %>
+<%= stylesheet_link_tag 'main', :media => 'screen' %>
+<%= stylesheet_link_tag 'header', :media => 'screen' %>
 </head>
 <body>
+  <div class = "container">
+    <div class = "span-24">
+    <ul class ="auth_bar">
+    <% if !current_user %>
+      <li><%= link_to "Register", new_user_url %></li>
+      <li><%= link_to "Log In", login_url %></li>
+    <% else %>
+      <li><%= link_to "My Account", user_url(@current_user) %></li>
+      <li><%= link_to "Logout", logout_url, :confirm => "Are you sure you want to logout?" %></li>
+    <% end %>
+    </ul>
+  
 
-<% if !current_user %>
-  <%= link_to "Register", new_user_url %> |
-  <%= link_to "Log In", login_url %>
-<% else %>
-  <%= link_to "My Account", user_url(@current_user) %> |
-  <%= link_to "Logout", logout_url, :confirm => "Are you sure you want to logout?" %>
-<% end %>
-<br />
-<% if flash[:error] %>
-      <%= flash[:error] %>
-<% end %>
-<br />
-<% if flash[:notice] %>
-      <%= flash[:notice] %>
- <% end %>
+    <% if flash[:error] %>
+      <div class = "notice">
+        <%= flash[:error] %>
+      </div>
+    <% end %>
+    <% if flash[:notice] %>
+      <div class = "success">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    </div>
 
-<%= yield  %>
+    <div class = "span-24">
+      <%= yield  %>
+    </div>
+    
+    <div class = "span-24">
+      Basement
+    </div>
+</div>
 </body>
 </html>

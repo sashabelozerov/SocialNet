@@ -1,0 +1,52 @@
+/* 
+    Document   : custom
+    Created on : 15.04.2010, 15:13:49
+    Author     : AB
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+
+
+div.success {
+    text-align: center;
+}
+
+div.notice {
+    text-align: center;
+}
+
+div.error {
+    text-align: center;
+}
+
+ul.auth_bar {
+  float: right;
+  background-color: white;
+  padding: 0.5em 1em;
+  white-space: nowrap;
+  margin: 1em;
+  font-size: 16pt
+}
+
+.auth_bar li {
+  list-style-type: none;
+  display: inline-block;
+  padding: 0.2em 0;
+}
+
+.auth_bar li a {
+  color: black;
+  padding: 0 5px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.auth_bar li a:hover {
+    color: red;
+}

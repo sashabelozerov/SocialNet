@@ -1,6 +1,6 @@
 <h1>Listing users</h1>
 
-<table>
+<table class = "container">
   <tr>
     <th>name</th>
     <th>login</th>
@@ -10,10 +10,7 @@
   <tr>
     <td><%=h user.name %></td>
     <td><%=h user.login %></td>
-    <td><%if user == @current_user %>
-	  logged in
-	  <% end %>
-    </td>
+    
 	<td>
 	<% if (user != @current_user) and @current_user %>
 	<%= link_to "Add Friend", friendships_path(:friend_id => user), :method => :post %>
@@ -25,10 +22,3 @@
   </tr>
 <% end %>
 </table>
-
-<p><% if @current_user %>
-Current user: <%= @current_user.name %>
-<% end %>
-</p>
-
-<%= link_to 'New user', new_user_path %>
