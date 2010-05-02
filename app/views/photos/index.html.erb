@@ -1,0 +1,31 @@
+<h2>Photos:</h2>
+
+<% if @user == @current_user %>
+	<%= link_to 'Add photo', new_user_photo_url(@user) %><br />
+<% end %>
+<table>
+<% for photo in @user.photos_as_author %>
+<tr>
+  <td><%= image_tag photo.image.url(:small) %></td>
+  <td><%= link_to "#{photo.title}", user_photo_url(@user, photo) %></td>
+  <% if can? :destroy, photo %>
+    <td><%= link_to 'Delete photo', photo, :method => :delete %></td>
+  <% end %>
+</tr>
+<% end %>
+<% for photo_user in @user.photo_users %>
+<% if photo_user.accepted? || (@user == @current_user) %>
+<tr>
+  <td><%= image_tag photo_user.photo.image.url(:small) %></td>
+  <td><%= link_to "#{photo_user.photo.title}", user_photo_url(@user, photo_user.photo.id) %></td>
+   <% unless photo_user.accepted? %>
+    <td> * </td>
+    <td><%= link_to "Accept", user_accept_tag_to_photo_url(@user, photo_user.photo.id) %></td>
+  <% end %>
+  <% if can? :destroy, photo_user %>
+    <td><%= link_to "Remove Tag", remove_tag_from_photo_url(@user, photo_user.photo.id, :target_id => photo_user.photo.id) %></td>
+  <% end %>
+</tr>
+<% end %>
+<% end %>
+</table>

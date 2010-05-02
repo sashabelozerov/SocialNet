@@ -25,11 +25,21 @@
 }
 
 #content div.accountSidebar {
+    text-align: center;
     float: left;
     width: 175px;
     margin: 0em;
     padding: 0.5em;
     border-right: 1px dotted black;
+}
+
+#content .accountSidebar h1{
+    font-weight: bold;
+    font-size: 14pt;
+}
+
+#content .accountSidebar h2{
+    font-size: 12pt;
 }
 
 #content div.accountMain {

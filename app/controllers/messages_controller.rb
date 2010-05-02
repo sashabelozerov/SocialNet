@@ -3,6 +3,7 @@ class MessagesController < ApplicationController
   before_filter :require_user
 
   before_filter :get_message, :only => [:show, :destroy, :delete_from_mailbox]
+  before_filter :account_sub_layout, :only => [:index, :show, :new]
 
   def delete_from_mailbox
     unauthorized! if cannot? :delete_from_mailbox, @message
@@ -15,12 +16,14 @@ class MessagesController < ApplicationController
   end
 
   def index
+    @user = @current_user;
     unauthorized! if cannot? :read, Message
     @mailbox = params[:mailbox]
     @messages = @current_user.messages(@mailbox)
   end
   
   def show
+    @user = current_user;
     unauthorized! if cannot? :read, @message
     if @current_user.target?(@message) && @message.target_read == 0
       @message.update_attribute(:target_read, 1)
@@ -32,6 +35,7 @@ class MessagesController < ApplicationController
   end
   
   def new
+    @user = @current_user;
     if params[:reply_to]
       @in_reply_to = Message.find(params[:reply_to])
     end

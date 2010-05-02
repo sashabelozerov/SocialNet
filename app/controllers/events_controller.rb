@@ -3,9 +3,10 @@ class EventsController < ApplicationController
 	before_filter :require_user, :only => [:new, :create, :edit, :update]
 	before_filter :current_user
 
-  before_filter :get_user, :only => [:index, :show]
+  before_filter :get_user, :only => [:index, :show, :new, :edit]
   before_filter :get_event, :only => [:edit, :update, :destroy, :show]
 
+  before_filter :account_sub_layout, :only => [:index, :show, :new, :edit]
 
   def index
      unauthorized! if cannot? :read, Event

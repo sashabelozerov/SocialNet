@@ -1,10 +1,23 @@
 
-  <div class="accountSidebar">
-    Messaged<br />
-    Events<br />
-    Photo<br />
-    dsfsdf
-  </div>
-  <div class="accountMain">
-    <%= yield %>
-  </div>
+<div class="accountSidebar">
+  <h1><%=h @user.name %></h1>
+
+  <% if can? :update, @user %>
+    (<%= link_to 'Edit profile', profile_edit_url %>)
+  <%  end %>
+
+  <br />
+  <br />
+  <% if can? :read, Message %>
+    <h2><%= link_to 'Inbox', user_messages_url(@user, :mailbox => "inbox") %></h2>
+    <h2><%= link_to 'Sent', user_messages_url(@user, :mailbox => "sent") %></h2>
+  <%end%>
+
+    <h2><%= link_to 'Friends', user_friendships_url(@user) %></h2>
+    <h2><%= link_to 'Events', user_events_url(@user) %></h2>
+    <h2><%= link_to 'Photos', user_photos_url(@user) %></h2>
+    
+</div>
+<div class="accountMain">
+  <%= yield %>
+</div>

@@ -48,4 +48,8 @@ class ApplicationController < ActionController::Base
         end
       end
 
+  def account_sub_layout
+    @sub_layout="account"
+  end
+
 end

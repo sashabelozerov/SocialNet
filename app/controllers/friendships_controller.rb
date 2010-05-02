@@ -1,9 +1,15 @@
 class FriendshipsController < ApplicationController
 
 	before_filter :current_user
-	
+	before_filter :get_user
+
+  before_filter :account_sub_layout, :only => [:index]
+  
+  def index
+  end
+
   def create
-    @user = @current_user
+    #@user = @current_user
     @friend = User.find(params[:friend_id])
     params[:friendship] = { :user_id => @user.id, :friend_id => @friend.id, :status => 'requested' }
     params[:inverse_friendship] = { :user_id => @friend.id, :friend_id => @user.id, :status => 'pending' }
@@ -28,7 +34,7 @@ class FriendshipsController < ApplicationController
   end
   
   def destroy
-    @user = @current_user
+    #@user = @current_user
     @friend = User.find(params[:friend_id])
     @friendship = @user.friendships.find_by_friend_id(@friend.id)
     @inverse_friendship = @friend.friendships.find_by_friend_id(@user.id)
@@ -41,12 +47,16 @@ class FriendshipsController < ApplicationController
   end
 
   def accept_friendship
-    @user = @current_user
+    #@user = @current_user
     @friendship = @user.friendships.find(params[:id])
     @inverse_friendship = Friendship.find_by_user_id_and_friend_id(@friendship.friend_id, @friendship.user_id)
     @friendship.update_attribute(:status, "accepted")
     @inverse_friendship.update_attribute(:status, "accepted")
     redirect_to user_url(@current_user)
+  end
+
+  def get_user
+    @user = User.find(params[:user_id])
   end
 
 end

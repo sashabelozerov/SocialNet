@@ -1,25 +1,28 @@
-<h1>"Events"</h1>
-
+<h2>Events:</h2>
+<% if @user == @current_user %>
+	<%= link_to 'Create event', new_user_event_url(@user) %><br />
+<% end %>
 <table>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Start Time</th>
-    <th>End Time</th>
-    <th>User</th>
-  </tr>
-  <% for event in @events %>
-    <tr>
-      <td><%=h event.title %></td>
-      <td><%=h event.description %></td>
-      <td><%=h event.start_time %></td>
-      <td><%=h event.end_time %></td>
-      <td><%=h event.user.name %></td>
-      <td><%= link_to "Show", user_event_url(@user,event) %></td>
-      <td><%= link_to "Edit", edit_user_event_url(@user,event) %></td>
-      <td><%= link_to "Destroy", event, :confirm => 'Are you sure?', :method => :delete %></td>
-    </tr>
+<% for event in @user.events_as_author %>
+<tr>
+<td><%= link_to "#{event.title}", user_event_url(@user, event) %></td>
+<% if can? :destroy, event %>
+	<td><%= link_to 'Cancel event', event, :method => :delete %></td>
+<% end %>
+</tr>
+<% end %>
+<% for event_user in @user.event_users %>
+<% if event_user.accepted? || (@user == @current_user) %>
+<tr>
+  <td><%= link_to "#{event_user.event.title}", user_event_url(@user, event_user.event.id) %></td>
+  <% unless event_user.accepted? %>
+    <td> * </td>
+    <td><%= link_to "Accept", user_accept_invitation_to_event_url(@user, event_user.event.id) %></td>
   <% end %>
+  <% if can? :destroy, event_user %>
+    <td><%= link_to "Decline", decline_invitation_to_event_url(@user, event_user.event.id, :target_id => event_user.user.id) %></td>
+  <% end %>
+</tr>
+<% end %>
+<% end %>
 </table>
-
-<p><%= link_to "New Event", new_user_event_url(@user) %></p>

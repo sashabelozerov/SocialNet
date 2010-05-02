@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_filter :require_user, :only => :show
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :current_user, :only => [:index, :destroy, :edit, :update]
-  before_filter :redefine_sub_layout, :only => [:show]
+  before_filter :account_sub_layout, :only => [:show, :edit]
 
   def index
     unauthorized! if cannot? :show, User
@@ -32,6 +32,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @user = @current_user
     unauthorized! if cannot? :update, @current_user
   end
   
@@ -50,10 +51,6 @@ class UsersController < ApplicationController
     unauthorized! if cannot? :destroy, @current_user
     @current_user.destroy
     redirect_to users_url
-  end
-
-  def redefine_sub_layout
-    @sub_layout="account"
   end
 
 end

@@ -1,0 +1,16 @@
+<h2>Friends:</h2>
+<table>
+<% for friendship in @user.accepted_friendships %>
+<tr>
+  <td><%= link_to "#{friendship.friend.name}", user_url(friendship.friend) %></td>
+  <td><%= link_to "Remove", decline_friendship_url(@user, :friend_id => friendship.friend.id), :method => :delete %></td>
+</tr>
+<%end%>
+<% for friendship in @user.pending_friendships %>
+<tr>
+<td><%= link_to "#{friendship.friend.name}", user_url(friendship.friend) %></td>
+<td><%= link_to "Accept", user_accept_friendship_url(@user,friendship)%></td>
+<td><%= link_to "Decline", decline_friendship_url(@user, :friend_id => friendship.friend.id), :method => :delete %></td>
+</tr>
+<% end %>
+</table>

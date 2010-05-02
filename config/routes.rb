@@ -7,12 +7,11 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :events, :has_many => :comments
 
-  map.resources :friendships, :only => [:create, :destroy]
-
   map.resources :messages
 
   # The priority is based upon order of creation: first created -> highest priority.
 
+map.resources :users, :has_many => [:friendships], :only => [:index, :create, :destroy]
 map.resources :users, :has_many => [:messages, :events, :photos, :comments], :except => [:edit, :destroy]
 map.resource :user_session, :only => :create
 
