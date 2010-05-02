@@ -42,18 +42,20 @@
   <% end %>
 <% end %>
 </p>
-<p>
+
+<ul class="inline_navigation">
   <!--
   <%= link_to "Comments", event_comments_url(@event) %> |
   <%= link_to "Invite" %>
   -->
+
   <% if can? :update, @event %>
-	| <%= link_to "Edit", edit_user_event_path(@user,@event) %> |
+    <li><%= link_to "Edit", edit_user_event_path(@user,@event) %></li>
   <% end %>
   <% if can? :destroy, @event %>
-	<%= link_to "Cancel event", @event, :confirm => 'Are you sure?', :method => :delete %>
+    <li><%= link_to "Cancel event", @event, :confirm => 'Are you sure?', :method => :delete %></li>
   <% end %>
-</p>
+</ul>
 
 <h2>Comments:</h2>
 <%= link_to "Add Comment", new_event_comment_url(@event) %>

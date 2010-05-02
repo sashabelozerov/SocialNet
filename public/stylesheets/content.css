@@ -1,0 +1,38 @@
+/* 
+    Document   : main
+    Created on : 15.04.2010, 16:58:26
+    Author     : AB
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+/*table * {
+	text-align: center;
+}
+*/
+
+#content .inline_navigation li {
+    display: inline;
+}
+
+#content .inline_navigation li+li:before {
+    content: "| ";
+}
+
+#content div.accountSidebar {
+    float: left;
+    width: 175px;
+    margin: 0em;
+    padding: 0.5em;
+    border-right: 1px dotted black;
+}
+
+#content div.accountMain {
+    width: 60%;
+    margin-left: 200px;
+}

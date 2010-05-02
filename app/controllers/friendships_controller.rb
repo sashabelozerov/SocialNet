@@ -8,15 +8,23 @@ class FriendshipsController < ApplicationController
     params[:friendship] = { :user_id => @user.id, :friend_id => @friend.id, :status => 'requested' }
     params[:inverse_friendship] = { :user_id => @friend.id, :friend_id => @user.id, :status => 'pending' }
 
+    for friendship in @user.friendships
+     if friendship.user_id==@user.id && friendship.friend_id==@friend.id
+        flash[:error] = "Unable to add a friend"
+        redirect_to root_url and return
+     end
+    end
+    
     @friendship = Friendship.create(params[:friendship])
     @inverse_friendship = Friendship.create(params[:inverse_friendship])
+    
     unauthorized! if (cannot? :create, @friendship) || (cannot? :create, @inverse_friendship)
     if @friendship.save && @inverse_friendship.save
       flash[:notice] = "Added friend"
     else
       flash[:error] = "Unable to add a friend"
     end
-    redirect_to users_url
+    redirect_to root_url
   end
   
   def destroy

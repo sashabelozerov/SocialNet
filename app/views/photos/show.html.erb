@@ -33,15 +33,16 @@
   <% end %>
 <% end %>
 </p>
-<p>
 
+
+<ul class ="inline_navigation">
   <% if can? :update, @photo %>
-	| <%= link_to "Edit", edit_user_photo_path(@user,@photo) %> |
+    <li><%= link_to "Edit", edit_user_photo_path(@user,@photo) %></li>
   <% end %>
   <% if can? :destroy, @photo %>
-	<%= link_to "Delete photo", @photo, :confirm => 'Are you sure?', :method => :delete %>
+    <li><%= link_to "Delete photo", @photo, :confirm => 'Are you sure?', :method => :delete %></li>
   <% end %>
-</p>
+</ul>
 
 <h2>Comments:</h2>
 <%= link_to "Add Comment", new_photo_comment_url(@photo) %>

@@ -16,6 +16,11 @@ class ApplicationController < ActionController::Base
    filter_parameter_logging :password, :password_confirmation
    helper_method :current_user_session, :current_user
 
+  def sub_layout
+    return @sub_layout if defined?(@sub_layout)
+    @sub_layout = "default"
+  end
+  
     private
       def current_user_session
         return @current_user_session if defined?(@current_user_session)
@@ -30,7 +35,7 @@ class ApplicationController < ActionController::Base
 	def require_no_user
       	if current_user
         	flash[:notice] = "You must be logged out to access this page"
-          redirect_to users_url
+          redirect_to root_url
         	return false
     		end
     end
@@ -38,8 +43,9 @@ class ApplicationController < ActionController::Base
 	def require_user
         unless current_user
         	flash[:notice] = "You must be logged in to access this page"
-          redirect_to login_url
+          redirect_to root_url
           return false
         end
       end
+
 end

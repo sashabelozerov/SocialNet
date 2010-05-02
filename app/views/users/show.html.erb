@@ -1,12 +1,8 @@
 
-<p>
-<%= link_to "Users List", users_path %>
-</p>
 <h1>
-  <%=h @user.name %>'s Page
+  <%=h @user.name %>
 </h1>
 
-<div class = "container">
 <% if can? :update, @user %>
   <%= link_to 'Edit profile', profile_edit_url %>
 <%  end %>
@@ -93,4 +89,4 @@
 <% end %>
 <% end %>
 </table>
-</div>
+

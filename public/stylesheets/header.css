@@ -11,42 +11,62 @@
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 
-
-
-div.success {
-    text-align: center;
+#header div.head {
+  margin: 0.5em 0em;
+  padding: 0em 0em;
+  height: 5.2em;
+  background-color: RGB(255,105,95);
 }
 
-div.notice {
-    text-align: center;
+#header div.logo {
+  float: left;
+  position: relative;
+  top: 0.5em;
+  left: 0.5em;
+  margin: 0em;
+  padding: 0em;
+  font: bold 2em Verdana, Times, serif;
+  color: white;
 }
 
-div.error {
-    text-align: center;
-}
-
-ul.auth_bar {
+#header div.authBar {
+  position: relative;
+  right: 0.5em;
+  top: 0.5em;
   float: right;
   background-color: white;
-  padding: 0.5em 1em;
-  white-space: nowrap;
-  margin: 1em;
-  font-size: 16pt
+  padding: 0.5em 0.5em;
+  margin: 0em;
+  font-size: 10pt
 }
 
-.auth_bar li {
+#header .authBar ul {
+    margin: 0;
+    padding: 0;
+}
+
+#header .authBar li {
   list-style-type: none;
-  display: inline-block;
-  padding: 0.2em 0;
+  display: inline;
+  margin: 0em 0.2em;
 }
 
-.auth_bar li a {
+#header .authBar li a {
   color: black;
-  padding: 0 5px;
   font-weight: bold;
   text-decoration: none;
 }
 
-.auth_bar li a:hover {
+#header .authBar li a:hover {
     color: red;
+}
+
+#header div.alert {
+    position: relative;
+    top: 0.7em;
+    margin: 0em 20em;
+}
+
+#header .alert .success, .notice, .error {
+    text-align: center;
 }

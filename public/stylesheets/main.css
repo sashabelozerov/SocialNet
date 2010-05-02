@@ -1,6 +1,6 @@
 /* 
     Document   : main
-    Created on : 15.04.2010, 16:58:26
+    Created on : 02.05.2010, 16:10:04
     Author     : AB
     Description:
         Purpose of the stylesheet follows.
@@ -12,13 +12,6 @@
 */
 
 body {
-    background-color: RGB(255,235,195);
+    background-color: RGB(255,255,255);
 }
 
-h1 {
-    text-align: center;
-}
-
-h2 {
-    text-align: center;
-}
